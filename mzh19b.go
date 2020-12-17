@@ -1,8 +1,8 @@
 package mhz19b
 
 import (
+	"errors"
 	"github.com/tarm/serial"
-	"log"
 	"time"
 )
 
@@ -10,7 +10,6 @@ func Read(device string) (ppm int, err error) {
 	c := &serial.Config{Name: device, Baud: 9600, Size: 8, Parity: 0, StopBits: 1}
 	port, err := serial.OpenPort(c)
 	if err != nil {
-		log.Printf("Device error: %v", err)
 		return 0, err
 	}
 	defer port.Close()
@@ -18,7 +17,6 @@ func Read(device string) (ppm int, err error) {
 	// Request CO2 concentration
 	_, err = port.Write([]byte{0xFF, 0x01, 0x86, 0x00, 0x00, 0x00, 0x00, 0x00, 0x79})
 	if err != nil {
-		log.Printf("Write error: %v", err)
 		return 0, err
 	}
 
@@ -28,14 +26,12 @@ func Read(device string) (ppm int, err error) {
 	buf := make([]byte, 9)
 	_, err = port.Read(buf)
 	if err != nil {
-		log.Printf("Read error: %v", err)
 		return 0, err
 	}
 
 	crc := getCheckSum(buf)
 	if buf[8] != crc {
-		log.Printf("CRC error: %d=%d", buf[8], crc)
-		return 0, err
+		return 0, errors.New("CRC error")
 	}
 
 	return int(buf[2])*256 + int(buf[3]), nil
