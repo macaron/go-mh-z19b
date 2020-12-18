@@ -39,7 +39,7 @@ func Read(device string) (ppm int, err error) {
 
 func getCheckSum(packet []byte) byte {
 	var checksum byte = 0
-	for i := 1; i < 7; i++ {
+	for i := 1; i < 8; i++ {
 		checksum += packet[i]
 	}
 	checksum = 255 - checksum
