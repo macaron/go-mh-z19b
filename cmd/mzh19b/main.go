@@ -15,7 +15,7 @@ func main() {
 	mhz19b := mhz19b.New(*device)
 
 	if *calibrate {
-		mhz19b.CalibrateDefault()
+		_ = mhz19b.CalibrateDefault()
 	}
 
 	ppm, _ := mhz19b.Read()
