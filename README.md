@@ -16,7 +16,7 @@ $ go get -u github.com/macaron/go-mh-z19b
 
 ```go
 func main() {
-    mhz16b := mhz19b.New("/dev/serial0")
+    mhz19b := mhz19b.New("/dev/serial0")
     ppm, err := mhz19b.Read()
     
     if err != nil {
