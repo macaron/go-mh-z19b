@@ -16,11 +16,15 @@ $ go get -u github.com/macaron/go-mh-z19b
 
 ```go
 func main() {
-    ppm, err := mhz19b.Read("/dev/serial0")
+    mhz16b := mhz19b.New("/dev/serial0")
+    ppm, err := mhz19b.Read()
     
     if err != nil {
     	log.Fetal(err)
     }
     fmt.Printf("CO2 = %dppm\n", ppm)
+
+    // If you want to reset the sensor ZERO point
+    // mhz19b.CalibrateDefault()
 }
 ```

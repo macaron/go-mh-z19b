@@ -2,13 +2,41 @@ package mhz19b
 
 import (
 	"errors"
-	"github.com/tarm/serial"
 	"time"
+
+	"github.com/tarm/serial"
 )
 
-func Read(device string) (ppm int, err error) {
-	c := &serial.Config{Name: device, Baud: 9600, Size: 8, Parity: 0, StopBits: 1}
-	port, err := serial.OpenPort(c)
+type MHZ19B struct {
+	SerialConfig *serial.Config
+}
+
+func New(device string) *MHZ19B {
+	serialConfig := &serial.Config{Name: device, Baud: 9600, Size: 8, Parity: 0, StopBits: 1}
+	mhz19b := &MHZ19B{SerialConfig: serialConfig}
+	return mhz19b
+}
+
+func (mhz19b *MHZ19B) CalibrateDefault() error {
+	port, err := serial.OpenPort(mhz19b.SerialConfig)
+	if err != nil {
+		return err
+	}
+	defer port.Close()
+
+	// Reset default point (400ppm)
+	_, err = port.Write([]byte{0xFF, 0x01, 0x87, 0x00, 0x00, 0x00, 0x00, 0x00, 0x78})
+	if err != nil {
+		return err
+	}
+
+	time.Sleep(time.Second)
+
+	return nil
+}
+
+func (mhz19b *MHZ19B) Read() (int, error) {
+	port, err := serial.OpenPort(mhz19b.SerialConfig)
 	if err != nil {
 		return 0, err
 	}
@@ -35,6 +63,11 @@ func Read(device string) (ppm int, err error) {
 	}
 
 	return int(buf[2])*256 + int(buf[3]), nil
+}
+
+func Read(device string) (ppm int, err error) {
+	mhz19b := New(device)
+	return mhz19b.Read()
 }
 
 func getCheckSum(packet []byte) byte {
