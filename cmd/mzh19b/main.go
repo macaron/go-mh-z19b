@@ -12,7 +12,7 @@ func main() {
 	device := flag.String("device", "/dev/serial0", "specific MH-Z19B")
 	flag.Parse()
 
-	mhz19b := mhz19b.New(*device)
+	m := mhz19b.New(*device)
 
 	if *calibrate {
 		_ = mhz19b.CalibrateDefault()
