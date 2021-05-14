@@ -24,7 +24,7 @@ build:
 	GOOS=$(GOOS) \
 	GOARCH=$(GOARCH) \
 	GOARM=$(GOARM) \
-	go build $(LDFLAGS) -o $(NAME) ./cmd/mzh19b/main.go
+	go build $(LDFLAGS) -o $(NAME) ./cmd/mhz19b/main.go
 
 ## Show help
 .PHONY: help
