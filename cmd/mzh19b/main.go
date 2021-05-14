@@ -18,6 +18,6 @@ func main() {
 		_ = mhz19b.CalibrateDefault()
 	}
 
-	ppm, _ := mhz19b.Read()
+	ppm, _ := m.Read()
 	fmt.Printf("%d\n", ppm)
 }
