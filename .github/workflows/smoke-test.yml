@@ -1,9 +1,9 @@
-name: Build Test
+name: Smoke Test
 on:
   push
 jobs:
   build:
-    name: Build test
+    name: Smoke test
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
