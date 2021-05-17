@@ -1,8 +1,11 @@
 FROM golang:1.16.4 as builder
 
+ARG GOOS
+ARG GOARCH
+
 COPY . /app
 WORKDIR /app
-RUN make build
+RUN make build -e $GOOS $GOARCH
 
 # Runtime image
 FROM alpine:3.13
