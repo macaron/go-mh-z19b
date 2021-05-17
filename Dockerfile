@@ -1,5 +1,7 @@
 FROM golang:1.16.4 as builder
 
+ENV CGO_ENABLED=0
+
 COPY . /app
 WORKDIR /app
 RUN make build
