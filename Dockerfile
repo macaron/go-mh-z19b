@@ -2,7 +2,7 @@ FROM golang:1.16.4 as builder
 
 COPY . /app
 WORKDIR /app
-RUN go mod download github.com/tarm/serial && make build
+RUN make build
 
 # Runtime image
 FROM alpine:3.13
