@@ -9,9 +9,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Docker build
-        run: |
-          docker build -t . mhz19b:latest
+        run: docker build . -t mhz19b:latest
 
       - name: Docker run
-        run: |
-          docker run mhz19b:latest -revision
+        run: docker run mhz19b:latest -revision
