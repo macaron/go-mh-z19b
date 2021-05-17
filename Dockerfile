@@ -5,7 +5,7 @@ ARG GOARCH
 
 COPY . /app
 WORKDIR /app
-RUN make build -e $GOOS $GOARCH
+RUN make build -e GOOS=$GOOS GOARCH=$GOARCH
 
 # Runtime image
 FROM alpine:3.13
