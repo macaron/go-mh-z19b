@@ -1,0 +1,17 @@
+name: Build Test
+on:
+  push
+jobs:
+  build:
+    name: Build test
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Docker build
+        run: |
+          docker build -t . mhz19b:latest
+
+      - name: Docker run
+        run: |
+          docker run mhz19b:latest -revision
