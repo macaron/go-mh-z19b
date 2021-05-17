@@ -9,7 +9,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Docker build
-        run: docker build --build-arg GOOS=$GOOS GOARCH=$GOARCH . -t mhz19b:latest
+        run: docker build --build-arg GOOS=$GOOS --build-arg GOARCH=$GOARCH . -t mhz19b:latest
         env:
           GOOS: linux
           GOARCH: amd64
