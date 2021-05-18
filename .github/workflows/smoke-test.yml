@@ -1,0 +1,18 @@
+name: Smoke Test
+on:
+  push
+jobs:
+  build:
+    name: Smoke test
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Docker build
+        run: docker build --build-arg GOOS=$GOOS --build-arg GOARCH=$GOARCH . -t mhz19b:latest
+        env:
+          GOOS: linux
+          GOARCH: amd64
+
+      - name: Docker run
+        run: docker run mhz19b:latest -revision

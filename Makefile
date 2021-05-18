@@ -21,6 +21,7 @@ lint: devel-deps
 ## Build binary
 .PHONY: build
 build:
+	go mod tidy && \
 	GOOS=$(GOOS) \
 	GOARCH=$(GOARCH) \
 	GOARM=$(GOARM) \
